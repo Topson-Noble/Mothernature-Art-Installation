@@ -7,108 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: arm_band_MTL
-    second: {fileID: 2100000, guid: 19edad07843cd914387a9de72835d313, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: earring_MTL
-    second: {fileID: 2100000, guid: 90a0eb18204194647901f3af2dbfa118, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
       name: eyeball_MTL
     second: {fileID: 2100000, guid: 51e574d3a61af28469fe068c33238886, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: eyebrow_MTL
-    second: {fileID: 2100000, guid: 25afcbf69debbe547a5dbeca30987131, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: golden_rim_MTL
-    second: {fileID: 2100000, guid: a219382922fe2c6468db74eb445dd365, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: hair_MTL
-    second: {fileID: 2100000, guid: 3b7aa5b276211d04ea1019a00e11be1d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: necklace_MTL
-    second: {fileID: 2100000, guid: 65c79c198c733a44e996b2d5d81b8c2b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: shoulderpad_MTL
-    second: {fileID: 2100000, guid: 2a8a0147c7e45e34d81f61ae327418a0, type: 2}
+    second: {fileID: 2100000, guid: 765fe998d1c8d2e44b97c828ad2ef815, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: skin_MTL
-    second: {fileID: 2100000, guid: e2622c1f90359414b941e6c43ca0cb6f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: wrist_band_MTL
-    second: {fileID: 2100000, guid: 32eb73ddd0e1e1843b0be6872b951088, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: arm_band_SG_Base_Color
-    second: {fileID: 2800000, guid: deba71e41ae9a4244ac538368e656d4c, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: earring_SG_Base_Color
-    second: {fileID: 2800000, guid: bf1c4028413af674794242b54fe3070b, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: earring_SG_Normal_OpenGL
-    second: {fileID: 2800000, guid: 35aceeb4ba0874c478327302fa718369, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: eyeball_SG_Base_Color
-    second: {fileID: 2800000, guid: a8d47d9af6307a34da9a8f7b067e2ef0, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: eyebrow001
-    second: {fileID: 2800000, guid: 2be25b3ac10501141a075aafcf9e30a6, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: hair SG_Base_Color
-    second: {fileID: 2800000, guid: a384391341c1cbb459a9901424b2de24, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: necklace_SG_Base_Color
-    second: {fileID: 2800000, guid: 3c0e856e16d501c449db91f5a65191c4, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: shoulderpad_SG_Base_Color
-    second: {fileID: 2800000, guid: 66f67821ed08eae498baa647145a4a70, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: skin_SG_Base_Color
-    second: {fileID: 2800000, guid: 2521865b971f96b4094e4bf59939c683, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: skin_SG_Normal_OpenGL
-    second: {fileID: 2800000, guid: d92183c1d4edf57488f9b15ab6a715c0, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: wrist_band_SG_Base_Color
-    second: {fileID: 2800000, guid: ecaf96349c1207c43a84268f042e08a6, type: 3}
+    second: {fileID: 2100000, guid: e1600d6a10fc1d54f8ba27e5f2e88e35, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -138,7 +48,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Blinking
+      name: Blink
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
