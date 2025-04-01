@@ -6351,6 +6351,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: hemisphere
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f86bf3e6408e6c147962a05f17a38d46, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
