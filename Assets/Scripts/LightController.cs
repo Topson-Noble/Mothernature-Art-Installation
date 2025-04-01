@@ -17,10 +17,13 @@ public class LightController : MonoBehaviour
 
 
     [SerializeField] List<GameObject> objectToBeFaded;
-       
-    
 
+    [SerializeField] List<Material> materialsToBeFaded;
 
+    private void Awake()
+    {
+        SetInitialState();
+    }
 
     private void Start()
     {
@@ -49,6 +52,11 @@ public class LightController : MonoBehaviour
         {
             obj.GetComponent<FadeOut>().StartFadeOut();
         }
+
+        foreach (Material obj in materialsToBeFaded)
+        {
+            StartDissolve(obj,3);
+        }
     }
 
 
@@ -74,5 +82,54 @@ public class LightController : MonoBehaviour
 
         // Ensure final intensity is exact
         light.intensity = targetIntensity;
+    }
+
+
+
+    public static IEnumerator DissolveMaterialOverTime(Material material, float duration)
+    {
+        // Check if material and shader are valid
+        if (material == null || !material.HasProperty("_Dissolve"))
+        {
+            Debug.LogError("Material is null or doesn't have a Dissolve property");
+            yield break;
+        }
+        Debug.Log("Yay" );
+        float startValue = material.GetFloat("_Dissolve");
+        float endValue = 0f;
+        float elapsedTime = 0f;
+
+        Debug.Log("Start" + material.GetFloat("_Dissolve"));
+        while (elapsedTime < duration)
+        {
+            // Calculate lerp progress (0 to 1)
+            float t = elapsedTime / duration;
+
+            // Lerp the dissolve value
+            float currentValue = Mathf.Lerp(startValue, endValue, t);
+            material.SetFloat("_Dissolve", currentValue);
+
+            // Increment time and wait for next frame
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure we end exactly at 1
+        material.SetFloat("_Dissolve", endValue);
+        Debug.Log("Yay" + material.GetFloat("_Dissolve"));
+    }
+
+    // Example usage function
+    public void StartDissolve(Material materialToDissolve, float dissolveTime)
+    {
+        StartCoroutine(DissolveMaterialOverTime(materialToDissolve, dissolveTime));
+    }
+
+    void SetInitialState()
+    {
+        foreach(Material obj in materialsToBeFaded)
+        {
+            obj.SetFloat("_Dissolve", 1);
+        }
     }
 }
