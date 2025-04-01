@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class LightController : MonoBehaviour
 {
-
-
     [SerializeField] List<LightData> lightData;
-
     [SerializeField] float time;
-
-
 
     [SerializeField] Material materialA; // Starting material (will be modified)
     [SerializeField] Material materialB; // Target material
 
-
     [SerializeField] List<GameObject> objectToBeFaded;
-
     [SerializeField] List<Material> materialsToBeFaded;
 
     private void Awake()
@@ -27,37 +20,50 @@ public class LightController : MonoBehaviour
 
     private void Start()
     {
-        StartDecay();
-
-       // GetComponent<MaterialTextureBlender>().BlendMaterials(
-       //    materialA,
-       //    materialB,
-       //    time,
-       //    blendAlbedo: true,
-       //    blendEmission: true,
-       //    blendNormalMap: false,
-       //    blendMetallicSmoothness: true
-       //);
-       
+        //StartDecay();
+        SetMaterialsToMinDissolve();
     }
+    void SetMaterialsToMinDissolve()
+    {
+        foreach (Material material in materialsToBeFaded)
+        {
+            if (material.HasProperty("_Dissolve"))
+            {
+                int propertyIndex = material.shader.FindPropertyIndex("_Dissolve");
+                Vector2 rangeLimits = material.shader.GetPropertyRangeLimits(propertyIndex);
+                float minDissolve = rangeLimits.x;
 
+                material.SetFloat("_Dissolve", minDissolve);
+            }
+        }
+    }
     public void StartDecay()
     {
+        StopAllCoroutines();
         foreach (LightData light in lightData)
         {
-            SetLightIntensityOverTime(light.light,light.finalIntensity,time);
+            SetLightIntensityOverTime(light.light, light.finalIntensity, time);
         }
-
-        
 
         foreach (Material obj in materialsToBeFaded)
         {
-            StartDissolve(obj,3);
+            StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
         }
     }
 
+    public void ReverseDecay()
+    {
+        StopAllCoroutines();
+        foreach (LightData light in lightData)
+        {
+            SetLightIntensityOverTime(light.light, light.initialIntensity, time); // Reverse light intensity
+        }
 
-
+        foreach (Material obj in materialsToBeFaded)
+        {
+            StartDissolve(obj, time, true); // true -> Reverse Dissolve (Reappear)
+        }
+    }
 
     public void SetLightIntensityOverTime(Light targetLight, float targetIntensity, float duration)
     {
@@ -71,60 +77,52 @@ public class LightController : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            // Smoothly interpolate intensity over time
             light.intensity = Mathf.Lerp(initialIntensity, targetIntensity, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
-            yield return null; // Wait for next frame
+            yield return null;
         }
 
-        // Ensure final intensity is exact
-        light.intensity = targetIntensity;
+        light.intensity = targetIntensity; // Ensure final value is exact
     }
 
-
-
-    public static IEnumerator DissolveMaterialOverTime(Material material, float duration)
+    public static IEnumerator DissolveMaterialOverTime(Material material, float duration, bool reverse)
     {
-        // Check if material and shader are valid
         if (material == null || !material.HasProperty("_Dissolve"))
         {
             Debug.LogError("Material is null or doesn't have a Dissolve property");
             yield break;
         }
-        Debug.Log("Yay" );
-        float startValue = material.GetFloat("_Dissolve");
-        float endValue = 0f;
+
+        int propertyIndex = material.shader.FindPropertyIndex("_Dissolve");
+        Vector2 rangeLimits = material.shader.GetPropertyRangeLimits(propertyIndex);
+        float minDissolve = rangeLimits.x;
+        float maxDissolve = rangeLimits.y;
+        float currentDissolve = material.GetFloat("_Dissolve");
+        float startValue = currentDissolve;
+        float endValue = reverse ? minDissolve : maxDissolve;
+
         float elapsedTime = 0f;
 
-        Debug.Log("Start" + material.GetFloat("_Dissolve"));
         while (elapsedTime < duration)
         {
-            // Calculate lerp progress (0 to 1)
             float t = elapsedTime / duration;
-
-            // Lerp the dissolve value
             float currentValue = Mathf.Lerp(startValue, endValue, t);
             material.SetFloat("_Dissolve", currentValue);
-
-            // Increment time and wait for next frame
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Ensure we end exactly at 1
-        material.SetFloat("_Dissolve", endValue);
-        Debug.Log("Yay" + material.GetFloat("_Dissolve"));
+        material.SetFloat("_Dissolve", endValue); // Ensure final value
     }
 
-    // Example usage function
-    public void StartDissolve(Material materialToDissolve, float dissolveTime)
+    public void StartDissolve(Material materialToDissolve, float dissolveTime, bool reverse)
     {
-        StartCoroutine(DissolveMaterialOverTime(materialToDissolve, dissolveTime));
+        StartCoroutine(DissolveMaterialOverTime(materialToDissolve, dissolveTime, reverse));
     }
 
     void SetInitialState()
     {
-        foreach(Material obj in materialsToBeFaded)
+        foreach (Material obj in materialsToBeFaded)
         {
             obj.SetFloat("_Dissolve", 1);
         }

@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Background MTL
-  m_Shader: {fileID: -6465566751694194690, guid: 28d959e39f9a8d64f80fcf83bae903f1, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: efb1d26729dab8341947b355fc21a823, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -142,7 +142,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.15566039, g: 0.573951, b: 1, a: 1}
     - _Color: {r: 0.15566036, g: 0.573951, b: 1, a: 1}
-    - _EdgeColor: {r: 0, g: 3.890196, b: 4, a: 0}
+    - _EdgeColor: {r: 0.0047692517, g: 0.3300695, b: 0.33702773, a: 0}
     - _EmissionColor: {r: 0, g: 0.05046934, b: 0.18867922, a: 1}
     - _NoiseUVSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _Offest: {r: 0, g: 0, b: 0, a: 0}
