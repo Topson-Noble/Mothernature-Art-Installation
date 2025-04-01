@@ -12831,6 +12831,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a9ccc641288358841b20eef97e88d968, type: 2}
+    - target: {fileID: 4781013811736978082, guid: fb97b6067b4dcfd40af145912a2a096f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.72
+      objectReference: {fileID: 0}
     - target: {fileID: 7978661710547365653, guid: fb97b6067b4dcfd40af145912a2a096f, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -12999,6 +13003,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 65c79c198c733a44e996b2d5d81b8c2b, type: 2}
   - {fileID: 2100000, guid: 2a8a0147c7e45e34d81f61ae327418a0, type: 2}
   - {fileID: 2100000, guid: 32eb73ddd0e1e1843b0be6872b951088, type: 2}
+  - {fileID: 2100000, guid: 5081f0105cc221c499f14a15633374a2, type: 2}
 --- !u!4 &2004755819
 Transform:
   m_ObjectHideFlags: 0

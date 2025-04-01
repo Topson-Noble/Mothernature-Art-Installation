@@ -48,10 +48,7 @@ public class LightController : MonoBehaviour
             SetLightIntensityOverTime(light.light,light.finalIntensity,time);
         }
 
-        foreach(GameObject obj in objectToBeFaded)
-        {
-            obj.GetComponent<FadeOut>().StartFadeOut();
-        }
+        
 
         foreach (Material obj in materialsToBeFaded)
         {
