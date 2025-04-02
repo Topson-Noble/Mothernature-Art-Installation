@@ -12,10 +12,10 @@ public class LightController : MonoBehaviour
 
     [SerializeField] List<GameObject> objectToBeFaded;
     [SerializeField] List<Material> materialsToBeFaded;
+    [SerializeField] List<GameObjectMaterialData> gameObjectsTobeFaded; // the one we are using
 
 
-
-
+    int gameObjCount = 0;
 
 
 
@@ -44,15 +44,18 @@ public class LightController : MonoBehaviour
     }
     void SetMaterialsToMinDissolve()
     {
-        foreach (Material material in materialsToBeFaded)
+        foreach (GameObjectMaterialData obj in gameObjectsTobeFaded)
         {
-            if (material.HasProperty("_Dissolve"))
+            foreach (Material material in obj.objectMaterials)
             {
-                int propertyIndex = material.shader.FindPropertyIndex("_Dissolve");
-                Vector2 rangeLimits = material.shader.GetPropertyRangeLimits(propertyIndex);
-                float minDissolve = rangeLimits.x;
+                if (material.HasProperty("_Dissolve"))
+                {
+                    int propertyIndex = material.shader.FindPropertyIndex("_Dissolve");
+                    Vector2 rangeLimits = material.shader.GetPropertyRangeLimits(propertyIndex);
+                    float minDissolve = rangeLimits.x;
 
-                material.SetFloat("_Dissolve", minDissolve);
+                    material.SetFloat("_Dissolve", minDissolve);
+                }
             }
         }
     }
@@ -86,9 +89,19 @@ public class LightController : MonoBehaviour
 
     void StartMaterialDecay(float time)
     {
-        foreach (Material obj in materialsToBeFaded)
+
+        if (gameObjCount < gameObjectsTobeFaded.Count)
         {
-            StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
+
+
+
+
+            foreach (Material obj in gameObjectsTobeFaded[gameObjCount].objectMaterials)
+            {
+                StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
+            }
+
+            gameObjCount++;
         }
     }
 
@@ -102,10 +115,23 @@ public class LightController : MonoBehaviour
 
     void ReverseMaterialDecay()
     {
-        foreach (Material obj in materialsToBeFaded)
+
+        if (gameObjCount > 0)
         {
-            StartDissolve(obj, time, true); // true -> Reverse Dissolve (Reappear)
+
+
+
+
+            foreach (Material obj in gameObjectsTobeFaded[gameObjCount].objectMaterials)
+            {
+                StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
+            }
+
+            gameObjCount--;
         }
+
+
+       
     }
 
    
@@ -167,9 +193,14 @@ public class LightController : MonoBehaviour
 
     void SetInitialState()
     {
-        foreach (Material obj in materialsToBeFaded)
+        foreach (GameObjectMaterialData obj in gameObjectsTobeFaded)
         {
-            obj.SetFloat("_Dissolve", 1);
+            foreach (Material mat in obj.objectMaterials)
+            {
+                mat.SetFloat("_Dissolve", 1);
+            }
+
+           
         }
     }
 }

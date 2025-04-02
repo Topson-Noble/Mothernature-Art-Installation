@@ -16,12 +16,18 @@ public class GameManager : MonoBehaviour
     {
 
         yield return new WaitForSeconds(10);
-        OnLightDecay?.Invoke(5f);
-        yield return new WaitForSeconds(10);
-
-
-
+        OnLightDecay?.Invoke(10f);
         OnMaterialDecay?.Invoke(3f);
+        yield return new WaitForSeconds(2);
+        OnMaterialDecay?.Invoke(3f);
+        yield return new WaitForSeconds(2);
+        OnMaterialDecay?.Invoke(3f);
+        yield return new WaitForSeconds(2);
+        OnMaterialDecay?.Invoke(3f);
+
+
+
+
     }
 
 
