@@ -13,6 +13,25 @@ public class LightController : MonoBehaviour
     [SerializeField] List<GameObject> objectToBeFaded;
     [SerializeField] List<Material> materialsToBeFaded;
 
+
+
+
+
+
+
+    private void OnEnable()
+    {
+        GameManager.OnLightDecay += StartLightDecay;
+        GameManager.OnMaterialDecay += StartMaterialDecay;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnLightDecay -= StartLightDecay;
+        GameManager.OnMaterialDecay -= StartMaterialDecay;
+    }
+
+
     private void Awake()
     {
         SetInitialState();
@@ -39,31 +58,57 @@ public class LightController : MonoBehaviour
     }
     public void StartDecay()
     {
+        StopAllCoroutines();      
+        StartLightDecay(5f);
+        StartMaterialDecay(5f);
+        
+    }
+
+
+    public void ReverseDecay()
+    {
         StopAllCoroutines();
+        ReverseLightDecay();
+        ReverseMaterialDecay();
+      
+        
+    }
+
+
+
+    void StartLightDecay(float time)
+    {
         foreach (LightData light in lightData)
         {
             SetLightIntensityOverTime(light.light, light.finalIntensity, time);
         }
+    }
 
+    void StartMaterialDecay(float time)
+    {
         foreach (Material obj in materialsToBeFaded)
         {
             StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
         }
     }
 
-    public void ReverseDecay()
+    void ReverseLightDecay()
     {
-        StopAllCoroutines();
         foreach (LightData light in lightData)
         {
             SetLightIntensityOverTime(light.light, light.initialIntensity, time); // Reverse light intensity
         }
+    }
 
+    void ReverseMaterialDecay()
+    {
         foreach (Material obj in materialsToBeFaded)
         {
             StartDissolve(obj, time, true); // true -> Reverse Dissolve (Reappear)
         }
     }
+
+   
 
     public void SetLightIntensityOverTime(Light targetLight, float targetIntensity, float duration)
     {
