@@ -554,7 +554,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3259285889726014649, guid: 5713b959e3c77a58fb258133fc8e4aef, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3259285889726014650, guid: 5713b959e3c77a58fb258133fc8e4aef, type: 3}
       propertyPath: m_Pivot.x
@@ -7803,7 +7803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3270b452b46074d8be7962cf1e37d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fbool: {fileID: 0}
+  fbool: {fileID: 314072663}
   isPersonInfront: 0
   decayNotStarted: 0
   ReverseDecayNotStarted: 0
