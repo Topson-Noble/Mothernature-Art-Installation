@@ -12,6 +12,25 @@ public class LightController : MonoBehaviour
 
     [SerializeField] List<GameObject> objectToBeFaded;
     [SerializeField] List<Material> materialsToBeFaded;
+    [SerializeField] List<GameObjectMaterialData> gameObjectsTobeFaded; // the one we are using
+
+
+    int gameObjCount = 0;
+
+
+
+    private void OnEnable()
+    {
+        GameManager.OnLightDecay += StartLightDecay;
+        GameManager.OnMaterialDecay += StartMaterialDecay;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnLightDecay -= StartLightDecay;
+        GameManager.OnMaterialDecay -= StartMaterialDecay;
+    }
+
 
     private void Awake()
     {
@@ -25,45 +44,97 @@ public class LightController : MonoBehaviour
     }
     void SetMaterialsToMinDissolve()
     {
-        foreach (Material material in materialsToBeFaded)
+        foreach (GameObjectMaterialData obj in gameObjectsTobeFaded)
         {
-            if (material.HasProperty("_Dissolve"))
+            foreach (Material material in obj.objectMaterials)
             {
-                int propertyIndex = material.shader.FindPropertyIndex("_Dissolve");
-                Vector2 rangeLimits = material.shader.GetPropertyRangeLimits(propertyIndex);
-                float minDissolve = rangeLimits.x;
+                if (material.HasProperty("_Dissolve"))
+                {
+                    int propertyIndex = material.shader.FindPropertyIndex("_Dissolve");
+                    Vector2 rangeLimits = material.shader.GetPropertyRangeLimits(propertyIndex);
+                    float minDissolve = rangeLimits.x;
 
-                material.SetFloat("_Dissolve", minDissolve);
+                    material.SetFloat("_Dissolve", minDissolve);
+                }
             }
         }
     }
     public void StartDecay()
     {
-        StopAllCoroutines();
-        foreach (LightData light in lightData)
-        {
-            SetLightIntensityOverTime(light.light, light.finalIntensity, time);
-        }
-
-        foreach (Material obj in materialsToBeFaded)
-        {
-            StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
-        }
+        StopAllCoroutines();      
+        StartLightDecay(5f);
+        StartMaterialDecay(5f);
+        
     }
+
 
     public void ReverseDecay()
     {
         StopAllCoroutines();
+        ReverseLightDecay();
+        ReverseMaterialDecay();
+      
+        
+    }
+
+
+
+    void StartLightDecay(float time)
+    {
+        foreach (LightData light in lightData)
+        {
+            SetLightIntensityOverTime(light.light, light.finalIntensity, time);
+        }
+    }
+
+    void StartMaterialDecay(float time)
+    {
+
+        if (gameObjCount < gameObjectsTobeFaded.Count)
+        {
+
+
+
+
+            foreach (Material obj in gameObjectsTobeFaded[gameObjCount].objectMaterials)
+            {
+                StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
+            }
+
+            gameObjCount++;
+        }
+    }
+
+    void ReverseLightDecay()
+    {
         foreach (LightData light in lightData)
         {
             SetLightIntensityOverTime(light.light, light.initialIntensity, time); // Reverse light intensity
         }
-
-        foreach (Material obj in materialsToBeFaded)
-        {
-            StartDissolve(obj, time, true); // true -> Reverse Dissolve (Reappear)
-        }
     }
+
+    void ReverseMaterialDecay()
+    {
+
+        if (gameObjCount > 0)
+        {
+
+
+
+
+            foreach (Material obj in gameObjectsTobeFaded[gameObjCount].objectMaterials)
+            {
+                StartDissolve(obj, time, false); // false -> Normal Dissolve (Disappear)
+            }
+
+            gameObjCount--;
+        }
+
+
+       
+    }
+
+   
 
     public void SetLightIntensityOverTime(Light targetLight, float targetIntensity, float duration)
     {
@@ -122,9 +193,14 @@ public class LightController : MonoBehaviour
 
     void SetInitialState()
     {
-        foreach (Material obj in materialsToBeFaded)
+        foreach (GameObjectMaterialData obj in gameObjectsTobeFaded)
         {
-            obj.SetFloat("_Dissolve", 1);
+            foreach (Material mat in obj.objectMaterials)
+            {
+                mat.SetFloat("_Dissolve", 1);
+            }
+
+           
         }
     }
 }
