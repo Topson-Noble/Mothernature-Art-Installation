@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] FaceDetectBoolean fbool;
     [SerializeField] bool isPersonInfront;
-    [SerializeField] bool decayNotStarted;
+    [SerializeField] bool decayNotStarted = true;
     [SerializeField] bool ReverseDecayNotStarted;
     public static Action<float> OnLightDecay;
     public static Action<float> OnMaterialDecay;
@@ -146,7 +148,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("waiting...");
         // While the flag is not false, keep waiting
-        while (isPersonInfront)
+        while (fbool.isFaceDetected())
         {
             yield return null; // Wait for the next frame
         }
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("waiting...");
         // While the flag is not false, keep waiting
-        while (!isPersonInfront)
+        while (!fbool.isFaceDetected())
         {
             yield return null; // Wait for the next frame
         }
@@ -172,7 +174,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isPersonInfront && decayNotStarted)
+        if (fbool.isFaceDetected() && decayNotStarted)
         {
             decayNotStarted = false;
             ReverseDecayNotStarted = true;
