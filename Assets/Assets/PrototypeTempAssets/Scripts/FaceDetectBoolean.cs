@@ -1,5 +1,6 @@
 using Mediapipe.Tasks.Vision.FaceLandmarker;
 using Mediapipe.Unity;
+using Mediapipe.Unity.Sample.FaceLandmarkDetection;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,14 +10,18 @@ public class FaceDetectBoolean : MonoBehaviour
     public GameObject[] motherNatureObjects; // Assign in Inspector
     private List<Transform> neckBones = new List<Transform>();
     public float rotationSpeed = 5f;
-
+    [SerializeField] FaceLandmarkerRunner _faceLandmarkerRunner;
     void Start()
-    {
+    {                           
         _faceController = FindObjectOfType<FaceLandmarkerResultAnnotationController>();
 
         if (_faceController == null)
         {
             Debug.LogError("FaceLandmarkerResultAnnotationController not found in the scene!");
+        }
+        else
+        {
+            Debug.Log(_faceController.gameObject.name);
         }
 
         // Find all neck03 bones in motherNatureObjects
@@ -44,14 +49,14 @@ public class FaceDetectBoolean : MonoBehaviour
 
     public bool isFaceDetected()
     {
-        if (_faceController == null) return false;
-        FaceLandmarkerResult result = _faceController.GetCurrentTarget();
+        
+        FaceLandmarkerResult result = _faceLandmarkerRunner.newResult;
         return result.faceLandmarks != null && result.faceLandmarks.Count > 0;
     }
 
     void RotateNecksToFace()
     {
-        FaceLandmarkerResult result = _faceController.GetCurrentTarget();
+        FaceLandmarkerResult result = _faceLandmarkerRunner.newResult;
 
         if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
         {
