@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] FaceDetectBoolean fbool;
     [SerializeField] bool isPersonInfront;
-    [SerializeField] bool decayNotStarted;
+    [SerializeField] bool decayNotStarted = true;
     [SerializeField] bool ReverseDecayNotStarted;
     public static Action<float> OnLightDecay;
     public static Action<float> OnMaterialDecay;
@@ -20,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] List<GameObject> treesList;
     [SerializeField] List<GameObject> scraperList;
+    [SerializeField] List<GameObject> birds;
+
+    [SerializeField] AudioClip futuristicClip;
     IEnumerator GameFlowForward()
     {
 
@@ -35,7 +40,69 @@ public class GameManager : MonoBehaviour
         {
             scraperList[0].GetComponent<SkyScraperRise>().Appear();
         });
+        foreach (GameObject bird in birds) {
+            bird.GetComponent<lb_Bird>().flyFunc();
+        
+        }
         yield return new WaitForSeconds(5);
+
+
+        treesList[1].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[1].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+
+
+
+        yield return new WaitForSeconds(5);
+
+
+        treesList[2].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[2].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+
+        treesList[3].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[3].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+
+        treesList[4].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[4].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+        treesList[11].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[11].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+
+
+
         yield return StartCoroutine(WaitForFlagToBeFalse());
 
         scraperList[0].GetComponent<SkyScraperRise>().Disappear(() =>
@@ -46,14 +113,18 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(WaitForFlagToBeTrue());
 
 
+        scraperList[11].GetComponent<SkyScraperRise>().Disappear(() =>
+        {
+            treesList[11].GetComponent<TreeAnimation>().Reappear();
+        });
 
 
-        
 
-        
+
 
 
         yield return new WaitForSeconds(6);
+        AudioManager.instance.SwapTrack(futuristicClip);
         OnLightDecay?.Invoke(10f);
         OnMaterialDecay?.Invoke(3f);
         yield return new WaitForSeconds(2);
@@ -77,7 +148,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("waiting...");
         // While the flag is not false, keep waiting
-        while (isPersonInfront)
+        while (fbool.isFaceDetected())
         {
             yield return null; // Wait for the next frame
         }
@@ -91,7 +162,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("waiting...");
         // While the flag is not false, keep waiting
-        while (!isPersonInfront)
+        while (!fbool.isFaceDetected())
         {
             yield return null; // Wait for the next frame
         }
@@ -103,7 +174,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isPersonInfront && decayNotStarted)
+        if (fbool.isFaceDetected() && decayNotStarted)
         {
             decayNotStarted = false;
             ReverseDecayNotStarted = true;
