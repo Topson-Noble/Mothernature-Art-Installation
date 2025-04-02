@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
         OnMaterialDecay?.Invoke(3f);
         yield return new WaitForSeconds(2);
         OnMaterialDecay?.Invoke(3f);
+        yield return new WaitForSeconds(2);
+        OnMaterialDecay?.Invoke(3f);
 
 
 
