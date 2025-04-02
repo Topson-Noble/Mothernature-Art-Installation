@@ -12,10 +12,23 @@ public class GameManager : MonoBehaviour
     public static Action<float> OnMaterialDecay;
     public static Action<float> OnLightReverse;
     public static Action<float> OnMaterialReverse;
+
+    [SerializeField] Animator motherNatureAnimator;
+    [SerializeField] Animator motherNatureAnimator2;
+    [SerializeField] GameObject firstCam;
+    [SerializeField] GameObject secondCam;
+
+
     IEnumerator GameFlowForward()
     {
 
-        yield return new WaitForSeconds(10);
+
+        motherNatureAnimator.SetBool("OpenScene",true);
+        motherNatureAnimator2.SetBool("OpenScene", true);
+
+        yield return new WaitForSeconds(2);
+        firstCam.SetActive(false);
+        yield return new WaitForSeconds(5);
         OnLightDecay?.Invoke(10f);
         OnMaterialDecay?.Invoke(3f);
         yield return new WaitForSeconds(2);
