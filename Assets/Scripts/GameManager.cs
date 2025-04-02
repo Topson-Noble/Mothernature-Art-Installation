@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject firstCam;
     [SerializeField] GameObject secondCam;
 
-
+    [SerializeField] List<GameObject> treesList;
+    [SerializeField] List<GameObject> scraperList;
     IEnumerator GameFlowForward()
     {
 
@@ -26,9 +27,33 @@ public class GameManager : MonoBehaviour
         motherNatureAnimator.SetBool("OpenScene",true);
         motherNatureAnimator2.SetBool("OpenScene", true);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
         firstCam.SetActive(false);
         yield return new WaitForSeconds(5);
+
+        treesList[0].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[0].GetComponent<SkyScraperRise>().Appear();
+        });
+        yield return new WaitForSeconds(5);
+        yield return StartCoroutine(WaitForFlagToBeFalse());
+
+        scraperList[0].GetComponent<SkyScraperRise>().Disappear(() =>
+        {
+            treesList[0].GetComponent<TreeAnimation>().Reappear();
+        });
+        yield return new WaitForSeconds(5);
+        yield return StartCoroutine(WaitForFlagToBeTrue());
+
+
+
+
+        
+
+        
+
+
+        yield return new WaitForSeconds(6);
         OnLightDecay?.Invoke(10f);
         OnMaterialDecay?.Invoke(3f);
         yield return new WaitForSeconds(2);
@@ -46,13 +71,32 @@ public class GameManager : MonoBehaviour
     }
 
 
-    IEnumerator GameFlowBackword()
-    {
+    
 
-        yield return new WaitForSeconds(10);
-        OnLightReverse?.Invoke(5f);
-        yield return new WaitForSeconds(10);
-        OnMaterialReverse?.Invoke(3f);
+    private IEnumerator WaitForFlagToBeFalse()
+    {
+        Debug.Log("waiting...");
+        // While the flag is not false, keep waiting
+        while (isPersonInfront)
+        {
+            yield return null; // Wait for the next frame
+        }
+        // Once the flag is false, proceed to the next step
+        Debug.Log("Flag is false, proceeding...");
+    }
+
+
+
+    private IEnumerator WaitForFlagToBeTrue()
+    {
+        Debug.Log("waiting...");
+        // While the flag is not false, keep waiting
+        while (!isPersonInfront)
+        {
+            yield return null; // Wait for the next frame
+        }
+        // Once the flag is false, proceed to the next step
+        Debug.Log("Flag is true, proceeding...");
     }
 
 
@@ -67,11 +111,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(GameFlowForward());
 
         }
-        else if (!isPersonInfront && ReverseDecayNotStarted) {
-            ReverseDecayNotStarted = false;
-            decayNotStarted = true;
         
-        
-        }
     }
 }
