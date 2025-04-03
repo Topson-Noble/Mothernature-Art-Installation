@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.SwapTrack(futuristicClip);
         OnLightDecay?.Invoke(10f);
         OnMaterialDecay?.Invoke(5f);
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
         yield return new WaitForSeconds(15);
         OnMaterialDecay?.Invoke(5f);
@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
 
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(30);
 
         StartCoroutine("FadeIn");
 

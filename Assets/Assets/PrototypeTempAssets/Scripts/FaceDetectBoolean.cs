@@ -26,6 +26,7 @@ public class FaceDetectBoolean : MonoBehaviour
             if (neck != null)
             {
                 neckBones.Add(neck);
+                Debug.Log($"Neck bone found in {obj.name}");
             }
             else
             {
@@ -47,44 +48,72 @@ public class FaceDetectBoolean : MonoBehaviour
         if (_faceController == null) return false;
         FaceLandmarkerResult result = _faceController.GetCurrentTarget();
 
-        if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
+        if (result.faceLandmarks != null && result.faceLandmarks != null && result.faceLandmarks.Count > 0)
         {
-            //Debug.Log("Face detected!");
+            Debug.Log("Face detected!");
             return true;
         }
         else
         {
-            //Debug.Log("No face detected.");
+            Debug.Log("No face detected.");
             return false;
         }
     }
 
     void RotateNeckToFace()
     {
+        if (_faceController == null) return;
+
+        // Ensure the face is detected
         FaceLandmarkerResult result = _faceController.GetCurrentTarget();
-
-        if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
+        if (result.faceLandmarks == null || result.faceLandmarks == null || result.faceLandmarks.Count == 0)
         {
-            var noseLandmark = result.faceLandmarks[0];
-            Vector3 nosePosition = new Vector3(noseLandmark.landmarks[0].x, noseLandmark.landmarks[0].y, noseLandmark.landmarks[0].z);
-            Vector3 worldNosePosition = Camera.main.ViewportToWorldPoint(new Vector3(nosePosition.x, nosePosition.y, Camera.main.nearClipPlane));
+            Debug.Log("No face landmarks detected.");
+            return;
+        }
 
-            foreach (Transform neckBone in neckBones)
+        // Access the nose landmark (index 0, adjust if necessary)
+        var noseLandmark = result.faceLandmarks[0];
+
+        // Convert normalized coordinates (0 to 1) to world space
+        Vector3 screenPoint = new Vector3(
+            noseLandmark.landmarks[0].x * UnityEngine.Screen.width,
+            (1 - noseLandmark.landmarks[0].y) * UnityEngine.Screen.height, // Flip Y-axis
+            Camera.main.farClipPlane * 0.3f // Adjust depth to avoid near plane issues
+        );
+
+        Vector3 worldNosePosition = Camera.main.ScreenToWorldPoint(screenPoint);
+        Debug.Log($"World Nose Position: {worldNosePosition}");
+
+        foreach (Transform neckBone in neckBones)
+        {
+            if (neckBone == null)
             {
-                if (neckBone == null) continue;
+                Debug.LogError("Neck bone is null!");
+                continue;
+            }
 
-                Vector3 direction = worldNosePosition - neckBone.position;
-                direction.y = -direction.y; // Adjust for correct vertical tilt
+            // Calculate direction towards the nose
+            Vector3 direction = new Vector3(
+                -(worldNosePosition.x - neckBone.position.x), // Fix left-right inversion
+                -(worldNosePosition.y - neckBone.position.y), // Fix top-bottom inversion
+                worldNosePosition.z - neckBone.position.z
+            );
 
-                if (direction.magnitude > 0.1f)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    //targetRotation *= Quaternion.Euler(20f, 0f, 0f); // Apply X-axis offset
-                    neckBone.localRotation = Quaternion.Slerp(neckBone.localRotation, targetRotation, Time.deltaTime * rotationSpeed);
-                }
+            if (direction.magnitude > 0.1f)
+            {
+                // Target rotation towards the nose
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                // Offset by 20 degrees on X-axis
+                targetRotation *= Quaternion.Euler(20f, 180f, 0f);
+
+                // Smoothly rotate the neck
+                neckBone.rotation = Quaternion.Slerp(neckBone.rotation, targetRotation, Time.deltaTime * rotationSpeed);
             }
         }
     }
+
     Transform FindChildByName(Transform parent, string childName)
     {
         foreach (Transform child in parent)
@@ -98,10 +127,4 @@ public class FaceDetectBoolean : MonoBehaviour
         }
         return null;
     }
-
-
-
-
-
-
 }
