@@ -8,7 +8,7 @@ public class FaceDetectBoolean : MonoBehaviour
     private FaceLandmarkerResultAnnotationController _faceController;
     public GameObject[] motherNatureObjects; // Assign in Inspector
     private List<Transform> neckBones = new List<Transform>();
-    public float rotationSpeed = 5f;
+    public float rotationSpeed = 5f; // Adjust rotation speed
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class FaceDetectBoolean : MonoBehaviour
     {
         if (isFaceDetected())
         {
-            RotateNecksToFace();
+            RotateNeckToFace();
         }
     }
 
@@ -46,10 +46,20 @@ public class FaceDetectBoolean : MonoBehaviour
     {
         if (_faceController == null) return false;
         FaceLandmarkerResult result = _faceController.GetCurrentTarget();
-        return result.faceLandmarks != null && result.faceLandmarks.Count > 0;
+
+        if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
+        {
+            Debug.Log("Face detected!");
+            return true;
+        }
+        else
+        {
+            Debug.Log("No face detected.");
+            return false;
+        }
     }
 
-    void RotateNecksToFace()
+    void RotateNeckToFace()
     {
         FaceLandmarkerResult result = _faceController.GetCurrentTarget();
 
@@ -75,7 +85,6 @@ public class FaceDetectBoolean : MonoBehaviour
             }
         }
     }
-
     Transform FindChildByName(Transform parent, string childName)
     {
         foreach (Transform child in parent)
@@ -89,4 +98,10 @@ public class FaceDetectBoolean : MonoBehaviour
         }
         return null;
     }
+
+
+
+
+
+
 }

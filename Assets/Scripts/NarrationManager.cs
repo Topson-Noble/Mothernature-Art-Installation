@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NarrationManager : MonoBehaviour
 {
+
     public enum NarrationState
     {
         None,
@@ -13,7 +14,7 @@ public class NarrationManager : MonoBehaviour
         ComeBack,
         Final
     }
-
+    public FaceDetectBoolean faceDetectBool;
     public NarrationState currentState = NarrationState.None;
     public AudioSource audioSource;
     public AudioClip introClip, moveOutClip, observeClip, comeBackClip, finalClip;
@@ -22,14 +23,15 @@ public class NarrationManager : MonoBehaviour
 
     void Start()
     {
-        PlayNarration(NarrationState.Intro); // Start with intro narration
+        PlayNarration(NarrationState.Intro);
+
         instance= this;
     }
 
     public void PlayNarration(NarrationState state)
     {
-        if (audioSource.isPlaying)
-            audioSource.Stop();
+        /*if (audioSource.isPlaying)
+            audioSource.Stop();*/
 
         currentState = state;
 
@@ -40,24 +42,26 @@ public class NarrationManager : MonoBehaviour
                 break;
             case NarrationState.MoveOut:
                 audioSource.clip = moveOutClip;
-                StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
-                return;
+                //StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
+                break;
             case NarrationState.Observe:
                 audioSource.clip = observeClip;
                 break;
             case NarrationState.ComeBack:
                 audioSource.clip = comeBackClip;
-                StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
-                return;
+                // StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
+                break;
             case NarrationState.Final:
                 audioSource.clip = finalClip;
-                StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
+               // StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
                 return;
             case NarrationState.None:
                 audioSource.Stop();
                 return;
         }
+        print("Play");
         audioSource.Play();
+        StartCoroutine(CheckAndChangeState());
     }
 
     IEnumerator LoopWhileConditionTrue(System.Func<bool> condition)
@@ -68,7 +72,20 @@ public class NarrationManager : MonoBehaviour
             yield return new WaitForSeconds(audioSource.clip.length);
         }
     }
-
+    bool isPaused;
+    private void Update()
+    {
+        if (!faceDetectBool.isFaceDetected())
+        {
+            isPaused=true;
+            PauseNarration();
+        }
+        else if (isPaused && faceDetectBool.isFaceDetected())
+        {
+            ResumeNarration();
+            isPaused=false;
+        }
+    }
     public void PauseNarration()
     {
         if (audioSource.isPlaying)
@@ -84,6 +101,32 @@ public class NarrationManager : MonoBehaviour
         {
             audioSource.time = pausedTime;
             audioSource.Play();
+        }
+    }
+  
+    IEnumerator CheckAndChangeState()
+    {
+        yield return new WaitUntil(() => IsCurrentClipFinished());
+        print("ConditionMet");
+        ChangeToNextState();
+    }
+
+    public bool IsCurrentClipFinished()
+    {
+        print("checking");
+        return audioSource.clip != null && !audioSource.isPlaying && audioSource.time >= audioSource.clip.length;
+    }
+
+    void ChangeToNextState()
+    {
+        if (currentState < NarrationState.Final) 
+        {
+            print("currentState 0 : "+currentState);
+
+            currentState++;
+            print("currentState : "+currentState);
+
+            PlayNarration(currentState);
         }
     }
 }
