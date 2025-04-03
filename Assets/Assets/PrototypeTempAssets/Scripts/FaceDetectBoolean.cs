@@ -106,7 +106,7 @@ public class FaceDetectBoolean : MonoBehaviour
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
 
                 // Offset by 20 degrees on X-axis
-                targetRotation *= Quaternion.Euler(20f, 180f, 0f);
+                targetRotation *= Quaternion.Euler(35f, 180f, 0f);
 
                 // Smoothly rotate the neck
                 neckBone.rotation = Quaternion.Slerp(neckBone.rotation, targetRotation, Time.deltaTime * rotationSpeed);

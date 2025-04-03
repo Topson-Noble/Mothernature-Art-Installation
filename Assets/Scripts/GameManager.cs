@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,13 +31,14 @@ public class GameManager : MonoBehaviour
 
     public Image image;  // Assign in Inspector
     public float fadeDuration = 2f;
-
+    [SerializeField] TextMeshProUGUI text;
     void Start()
     {
         decayNotStarted=true;
     }
     IEnumerator GameFlowForward()
     {
+        
         NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.Intro);
         yield return new WaitForSeconds(21);
         motherNatureAnimator.SetBool("OpenScene",true);
@@ -207,7 +209,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
 
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(40);
 
         StartCoroutine("FadeIn");
 
@@ -272,14 +274,18 @@ public class GameManager : MonoBehaviour
     {
         float elapsedTime = 0f;
         Color color = image.color;
+        Color textColor = text.color;
         color.a = 0f;  // Start with fully transparent
+        textColor.a = 0f;
         image.color = color;
-
+        text.color = textColor;
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             color.a = Mathf.Clamp01(elapsedTime / fadeDuration);
+            textColor.a = Mathf.Clamp01(elapsedTime / 5f);
             image.color = color;
+            text.color = textColor;
             yield return null;
         }
     }

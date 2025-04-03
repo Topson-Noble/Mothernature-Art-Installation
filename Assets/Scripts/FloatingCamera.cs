@@ -8,6 +8,15 @@ public class FloatingCamera : MonoBehaviour
 
     void Start()
     {
+
+        if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
+        {
+            Application.RequestUserAuthorization(UserAuthorization.WebCam);
+
+        }
+
+
+
         FloatAnimation();
     }
 
