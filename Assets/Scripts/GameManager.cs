@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip futuristicClip;
     IEnumerator GameFlowForward()
     {
-
-
         motherNatureAnimator.SetBool("OpenScene",true);
         motherNatureAnimator2.SetBool("OpenScene", true);
 
@@ -102,7 +100,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-
+        print("Please disappear");
         yield return StartCoroutine(WaitForFlagToBeFalse());
 
         scraperList[0].GetComponent<SkyScraperRise>().Disappear(() =>
@@ -110,6 +108,8 @@ public class GameManager : MonoBehaviour
             treesList[0].GetComponent<TreeAnimation>().Reappear();
         });
         yield return new WaitForSeconds(5);
+        print("Please Reappear");
+
         yield return StartCoroutine(WaitForFlagToBeTrue());
 
 

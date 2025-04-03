@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class LightController : MonoBehaviour
 {
+
+    //MAKE AN ENUM OR LIST OF THE OBJECTS TO DECAY..MAKE A FUNCTION THAT TAKES THE ENUMS STATE..AND BASED ON THAT DISSOLVE THAT PARTICULAR OBJECT
+    //THE GLOBE DECAYS FIRST..THEN MOTHERNATURE FIGURE..THEN THE SPACE AND THEN PLANET,,
+
     [SerializeField] List<LightData> lightData;
     [SerializeField] float time;
 

@@ -22,8 +22,8 @@ public class AudioManager : MonoBehaviour
         track01 = gameObject.AddComponent<AudioSource>();
         track02 = gameObject.AddComponent<AudioSource>();
         isPlayingTrack01 = true;
-        track01.volume = 0.5f;
-        track02.volume = 0.5f;
+        track01.volume = 0.25f;
+        track02.volume = 0.25f;
         SwapTrack(defaultAmbient);
     }
 

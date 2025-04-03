@@ -1,6 +1,5 @@
 using Mediapipe.Tasks.Vision.FaceLandmarker;
 using Mediapipe.Unity;
-using Mediapipe.Unity.Sample.FaceLandmarkDetection;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,19 +8,15 @@ public class FaceDetectBoolean : MonoBehaviour
     private FaceLandmarkerResultAnnotationController _faceController;
     public GameObject[] motherNatureObjects; // Assign in Inspector
     private List<Transform> neckBones = new List<Transform>();
-    public float rotationSpeed = 5f;
-    [SerializeField] FaceLandmarkerRunner _faceLandmarkerRunner;
+    public float rotationSpeed = 5f; // Adjust rotation speed
+
     void Start()
-    {                           
+    {
         _faceController = FindObjectOfType<FaceLandmarkerResultAnnotationController>();
 
         if (_faceController == null)
         {
             Debug.LogError("FaceLandmarkerResultAnnotationController not found in the scene!");
-        }
-        else
-        {
-            Debug.Log(_faceController.gameObject.name);
         }
 
         // Find all neck03 bones in motherNatureObjects
@@ -43,20 +38,30 @@ public class FaceDetectBoolean : MonoBehaviour
     {
         if (isFaceDetected())
         {
-            RotateNecksToFace();
+            RotateNeckToFace();
         }
     }
 
     public bool isFaceDetected()
     {
-        
-        FaceLandmarkerResult result = _faceLandmarkerRunner.newResult;
-        return result.faceLandmarks != null && result.faceLandmarks.Count > 0;
+        if (_faceController == null) return false;
+        FaceLandmarkerResult result = _faceController.GetCurrentTarget();
+
+        if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
+        {
+            Debug.Log("Face detected!");
+            return true;
+        }
+        else
+        {
+            Debug.Log("No face detected.");
+            return false;
+        }
     }
 
-    void RotateNecksToFace()
+    void RotateNeckToFace()
     {
-        FaceLandmarkerResult result = _faceLandmarkerRunner.newResult;
+        FaceLandmarkerResult result = _faceController.GetCurrentTarget();
 
         if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
         {
@@ -80,7 +85,6 @@ public class FaceDetectBoolean : MonoBehaviour
             }
         }
     }
-
     Transform FindChildByName(Transform parent, string childName)
     {
         foreach (Transform child in parent)
@@ -94,4 +98,10 @@ public class FaceDetectBoolean : MonoBehaviour
         }
         return null;
     }
+
+
+
+
+
+
 }
