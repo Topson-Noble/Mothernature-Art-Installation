@@ -18,7 +18,7 @@ namespace Mediapipe.Unity.Sample.FaceLandmarkDetection
     private Experimental.TextureFramePool _textureFramePool;
 
     public readonly FaceLandmarkDetectionConfig config = new FaceLandmarkDetectionConfig();
-
+        public FaceLandmarkerResult newResult;
     public override void Stop()
     {
       base.Stop();
@@ -155,6 +155,8 @@ namespace Mediapipe.Unity.Sample.FaceLandmarkDetection
 
     private void OnFaceLandmarkDetectionOutput(FaceLandmarkerResult result, Image image, long timestamp)
     {
+
+            newResult = result;
       _faceLandmarkerResultAnnotationController.DrawLater(result);
     }
   }
