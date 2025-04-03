@@ -7467,6 +7467,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatHeight: 2
   duration: 2
+  durationshake: 1.5
+  shakeDuration: 1.5
+  shakeStrength: 0.05
+  vibrato: 10
+  randomness: 90
 --- !u!114 &628743146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8066,12 +8071,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cad835ffd945a1043ada5ee44060698e, type: 2}
   gameObjectsTobeFaded:
   - objectMaterials:
-    - {fileID: 2100000, guid: 19edad07843cd914387a9de72835d313, type: 2}
-    - {fileID: 2100000, guid: a219382922fe2c6468db74eb445dd365, type: 2}
-    - {fileID: 2100000, guid: 65c79c198c733a44e996b2d5d81b8c2b, type: 2}
-    - {fileID: 2100000, guid: 2a8a0147c7e45e34d81f61ae327418a0, type: 2}
-    - {fileID: 2100000, guid: 32eb73ddd0e1e1843b0be6872b951088, type: 2}
-  - objectMaterials:
     - {fileID: 2100000, guid: 5081f0105cc221c499f14a15633374a2, type: 2}
   - objectMaterials:
     - {fileID: 2100000, guid: ad2b556ef5f39df4cbaf4a43de204aa2, type: 2}
@@ -8081,6 +8080,12 @@ MonoBehaviour:
     - {fileID: 2100000, guid: cb19f02d1e2b6e143b4ce2e7923f4bb1, type: 2}
     - {fileID: 2100000, guid: dccd196b11058b4408b8e58906b480dd, type: 2}
     - {fileID: 2100000, guid: cad835ffd945a1043ada5ee44060698e, type: 2}
+  - objectMaterials:
+    - {fileID: 2100000, guid: 19edad07843cd914387a9de72835d313, type: 2}
+    - {fileID: 2100000, guid: a219382922fe2c6468db74eb445dd365, type: 2}
+    - {fileID: 2100000, guid: 65c79c198c733a44e996b2d5d81b8c2b, type: 2}
+    - {fileID: 2100000, guid: 2a8a0147c7e45e34d81f61ae327418a0, type: 2}
+    - {fileID: 2100000, guid: 32eb73ddd0e1e1843b0be6872b951088, type: 2}
 --- !u!4 &807108245
 Transform:
   m_ObjectHideFlags: 0
@@ -8276,6 +8281,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatHeight: 2
   duration: 2
+  durationshake: 1.5
+  shakeDuration: 1.5
+  shakeStrength: 0.05
+  vibrato: 10
+  randomness: 90
 --- !u!114 &853512492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16365,6 +16375,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatHeight: 2
   duration: 2
+  durationshake: 6
+  shakeDuration: 6
+  shakeStrength: 0.1
+  vibrato: 30
+  randomness: 30
 --- !u!1 &2018364522 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9019202371234023755, guid: 12ca123787379c4409788163c093c5cc, type: 3}
@@ -19737,7 +19752,6 @@ GameObject:
   - component: {fileID: 2048853983191497354}
   - component: {fileID: 7477760916108935008}
   - component: {fileID: 5720171633089572586}
-  - component: {fileID: 7477760916108935009}
   m_Layer: 6
   m_Name: BG
   m_TagString: Untagged
@@ -27931,21 +27945,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601734034518240215}
   m_Mesh: {fileID: -41976385740691892, guid: fb97b6067b4dcfd40af145912a2a096f, type: 3}
---- !u!114 &7477760916108935009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601734034518240215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 623a14aefa554bf41abe6f604acf4cf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colorA: {r: 0.15294118, g: 0.57254905, b: 0.9960785, a: 1}
-  colorB: {r: 0, g: 1, b: 0.8198209, a: 1}
-  duration: 2
 --- !u!137 &7480008342960019026
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
