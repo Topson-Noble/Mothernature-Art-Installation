@@ -10,7 +10,7 @@ public class SkyScraperRise : MonoBehaviour
 
     void Start()
     {
-        originalScale = transform.localScale; // Save original size
+        originalScale = new Vector3(1f,1f,1f); // Save original size
         transform.localScale = new Vector3(originalScale.x, 0, originalScale.z); // Start at height 0
     }
 

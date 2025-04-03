@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,15 +27,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> birds;
 
     [SerializeField] AudioClip futuristicClip;
+
+    public Image image;  // Assign in Inspector
+    public float fadeDuration = 2f;
+
+    void Start()
+    {
+        decayNotStarted=true;
+    }
     IEnumerator GameFlowForward()
     {
+        NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.Intro);
+        yield return new WaitForSeconds(21);
         motherNatureAnimator.SetBool("OpenScene",true);
         motherNatureAnimator2.SetBool("OpenScene", true);
-
+       
         yield return new WaitForSeconds(4);
         firstCam.SetActive(false);
         yield return new WaitForSeconds(5);
-
+        
         treesList[0].GetComponent<TreeAnimation>().Fall(() =>
         {
             scraperList[0].GetComponent<SkyScraperRise>().Appear();
@@ -42,44 +54,26 @@ public class GameManager : MonoBehaviour
             bird.GetComponent<lb_Bird>().flyFunc();
         
         }
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(15);
 
 
-        treesList[1].GetComponent<TreeAnimation>().Fall(() =>
+
+        
+
+
+
+
+
+        treesList[7].GetComponent<TreeAnimation>().Fall(() =>
         {
-            scraperList[1].GetComponent<SkyScraperRise>().Appear();
+            scraperList[7].GetComponent<SkyScraperRise>().Appear();
         });
         foreach (GameObject bird in birds)
         {
             bird.GetComponent<lb_Bird>().flyFunc();
 
         }
-
-
-
-        yield return new WaitForSeconds(5);
-
-
-        treesList[2].GetComponent<TreeAnimation>().Fall(() =>
-        {
-            scraperList[2].GetComponent<SkyScraperRise>().Appear();
-        });
-        foreach (GameObject bird in birds)
-        {
-            bird.GetComponent<lb_Bird>().flyFunc();
-
-        }
-
-        treesList[3].GetComponent<TreeAnimation>().Fall(() =>
-        {
-            scraperList[3].GetComponent<SkyScraperRise>().Appear();
-        });
-        foreach (GameObject bird in birds)
-        {
-            bird.GetComponent<lb_Bird>().flyFunc();
-
-        }
-
+        yield return new WaitForSeconds(20);
         treesList[4].GetComponent<TreeAnimation>().Fall(() =>
         {
             scraperList[4].GetComponent<SkyScraperRise>().Appear();
@@ -89,6 +83,17 @@ public class GameManager : MonoBehaviour
             bird.GetComponent<lb_Bird>().flyFunc();
 
         }
+        yield return new WaitForSeconds(4);
+        treesList[5].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[5].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+        yield return new WaitForSeconds(15);
         treesList[11].GetComponent<TreeAnimation>().Fall(() =>
         {
             scraperList[11].GetComponent<SkyScraperRise>().Appear();
@@ -99,18 +104,51 @@ public class GameManager : MonoBehaviour
 
         }
 
+        yield return new WaitForSeconds(15);
 
-        print("Please disappear");
+
+        treesList[9].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[9].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+        yield return new WaitForSeconds(22);
+
+        treesList[8].GetComponent<TreeAnimation>().Fall(() =>
+        {
+            scraperList[8].GetComponent<SkyScraperRise>().Appear();
+        });
+        foreach (GameObject bird in birds)
+        {
+            bird.GetComponent<lb_Bird>().flyFunc();
+
+        }
+        yield return new WaitForSeconds(14);
+
+
+
+
         yield return StartCoroutine(WaitForFlagToBeFalse());
+
+        NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.Observe);
+
+
+
+
+
+
+
+
 
         scraperList[0].GetComponent<SkyScraperRise>().Disappear(() =>
         {
             treesList[0].GetComponent<TreeAnimation>().Reappear();
         });
         yield return new WaitForSeconds(5);
-        print("Please Reappear");
-
-        yield return StartCoroutine(WaitForFlagToBeTrue());
 
 
         scraperList[11].GetComponent<SkyScraperRise>().Disappear(() =>
@@ -118,23 +156,59 @@ public class GameManager : MonoBehaviour
             treesList[11].GetComponent<TreeAnimation>().Reappear();
         });
 
+        yield return new WaitForSeconds(5);
+
+        scraperList[5].GetComponent<SkyScraperRise>().Disappear(() =>
+        {
+            treesList[5].GetComponent<TreeAnimation>().Reappear();
+        });
+
+        yield return new WaitForSeconds(5);
+
+        scraperList[7].GetComponent<SkyScraperRise>().Disappear(() =>
+        {
+            treesList[7].GetComponent<TreeAnimation>().Reappear();
+        });
+
+        scraperList[9].GetComponent<SkyScraperRise>().Disappear(() =>
+        {
+            treesList[9].GetComponent<TreeAnimation>().Reappear();
+        });
+
+        yield return new WaitForSeconds(5);
+
+        yield return StartCoroutine(WaitForFlagToBeTrue());
+        NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.Final);
+
+        yield return new WaitForSeconds(10);
+
+        for(int i = 0; i<scraperList.Count; i++)
+        {
+
+            treesList[i].GetComponent<TreeAnimation>().Fall();
+            scraperList[i].GetComponent<SkyScraperRise>().Appear();
+        }
 
 
 
-
+        yield return new WaitForSeconds(10);
 
         yield return new WaitForSeconds(6);
         AudioManager.instance.SwapTrack(futuristicClip);
         OnLightDecay?.Invoke(10f);
-        OnMaterialDecay?.Invoke(3f);
-        yield return new WaitForSeconds(2);
-        OnMaterialDecay?.Invoke(3f);
-        yield return new WaitForSeconds(2);
-        OnMaterialDecay?.Invoke(3f);
-        yield return new WaitForSeconds(2);
-        OnMaterialDecay?.Invoke(3f);
-        yield return new WaitForSeconds(2);
-        OnMaterialDecay?.Invoke(3f);
+        OnMaterialDecay?.Invoke(5f);
+        yield return new WaitForSeconds(15);
+        OnMaterialDecay?.Invoke(5f);
+        yield return new WaitForSeconds(15);
+        OnMaterialDecay?.Invoke(5f);
+        yield return new WaitForSeconds(10);
+        OnMaterialDecay?.Invoke(5f);
+        yield return new WaitForSeconds(5);
+        OnMaterialDecay?.Invoke(5f);
+
+        yield return new WaitForSeconds(15);
+
+        StartCoroutine("FadeIn");
 
 
 
@@ -147,6 +221,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitForFlagToBeFalse()
     {
         Debug.Log("waiting...");
+        NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.MoveOut);
+        Debug.Log("valueee "+ fbool.isFaceDetected());
         // While the flag is not false, keep waiting
         while (fbool.isFaceDetected())
         {
@@ -160,6 +236,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator WaitForFlagToBeTrue()
     {
+
+        NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.ComeBack);
         Debug.Log("waiting...");
         // While the flag is not false, keep waiting
         while (!fbool.isFaceDetected())
@@ -176,6 +254,8 @@ public class GameManager : MonoBehaviour
     {
         if (fbool.isFaceDetected() && decayNotStarted)
         {
+            print("Check")
+;
             decayNotStarted = false;
             ReverseDecayNotStarted = true;
             StopAllCoroutines();
@@ -183,5 +263,23 @@ public class GameManager : MonoBehaviour
 
         }
         
+    }
+
+
+
+    IEnumerator FadeIn()
+    {
+        float elapsedTime = 0f;
+        Color color = image.color;
+        color.a = 0f;  // Start with fully transparent
+        image.color = color;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Clamp01(elapsedTime / fadeDuration);
+            image.color = color;
+            yield return null;
+        }
     }
 }

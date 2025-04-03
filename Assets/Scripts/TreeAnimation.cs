@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System;
+using Unity.VisualScripting;
 
 public class TreeAnimation : MonoBehaviour
 {
@@ -14,12 +15,12 @@ public class TreeAnimation : MonoBehaviour
     public float fallAngle = 80f; // How much the tree tilts when falling
     public float durationFall = 2f; // Time for the fall animation
     public Vector3 fallDirection = Vector3.forward; // Direction the tree falls
-
-
-
-
-
    
+
+
+
+
+
 
     private Tween swayTween; // Store the tween to control it
 
@@ -38,6 +39,7 @@ public class TreeAnimation : MonoBehaviour
 
     public void Fall(Action onComplete = null)
     {
+        AudioManager.instance.treeSource.Play();
         StopSway();
         // Rotate the tree to simulate falling
         transform.DORotate(fallDirection * fallAngle, durationFall)

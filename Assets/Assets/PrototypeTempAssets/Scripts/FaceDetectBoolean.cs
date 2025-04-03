@@ -49,12 +49,12 @@ public class FaceDetectBoolean : MonoBehaviour
 
         if (result.faceLandmarks != null && result.faceLandmarks.Count > 0)
         {
-            Debug.Log("Face detected!");
+            //Debug.Log("Face detected!");
             return true;
         }
         else
         {
-            Debug.Log("No face detected.");
+            //Debug.Log("No face detected.");
             return false;
         }
     }
@@ -79,7 +79,7 @@ public class FaceDetectBoolean : MonoBehaviour
                 if (direction.magnitude > 0.1f)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    targetRotation *= Quaternion.Euler(20f, 0f, 0f); // Apply X-axis offset
+                    //targetRotation *= Quaternion.Euler(20f, 0f, 0f); // Apply X-axis offset
                     neckBone.localRotation = Quaternion.Slerp(neckBone.localRotation, targetRotation, Time.deltaTime * rotationSpeed);
                 }
             }

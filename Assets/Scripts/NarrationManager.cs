@@ -23,7 +23,7 @@ public class NarrationManager : MonoBehaviour
 
     void Start()
     {
-        PlayNarration(NarrationState.Intro);
+       // PlayNarration(NarrationState.Intro);
 
         instance= this;
     }
@@ -53,15 +53,15 @@ public class NarrationManager : MonoBehaviour
                 break;
             case NarrationState.Final:
                 audioSource.clip = finalClip;
-               // StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
-                return;
+                // StartCoroutine(LoopWhileConditionTrue(() => /* Add condition here */ true));
+                break;
             case NarrationState.None:
                 audioSource.Stop();
                 return;
         }
-        print("Play");
+        //print("Play");
         audioSource.Play();
-        StartCoroutine(CheckAndChangeState());
+        //StartCoroutine(CheckAndChangeState());
     }
 
     IEnumerator LoopWhileConditionTrue(System.Func<bool> condition)
@@ -75,16 +75,16 @@ public class NarrationManager : MonoBehaviour
     bool isPaused;
     private void Update()
     {
-        if (!faceDetectBool.isFaceDetected())
-        {
-            isPaused=true;
-            PauseNarration();
-        }
-        else if (isPaused && faceDetectBool.isFaceDetected())
-        {
-            ResumeNarration();
-            isPaused=false;
-        }
+        //if (!faceDetectBool.isFaceDetected())
+        //{
+        //    isPaused=true;
+        //    PauseNarration();
+        //}
+        //else if (isPaused && faceDetectBool.isFaceDetected())
+        //{
+        //    ResumeNarration();
+        //    isPaused=false;
+        //}
     }
     public void PauseNarration()
     {
@@ -107,13 +107,13 @@ public class NarrationManager : MonoBehaviour
     IEnumerator CheckAndChangeState()
     {
         yield return new WaitUntil(() => IsCurrentClipFinished());
-        print("ConditionMet");
+        //print("ConditionMet");
         ChangeToNextState();
     }
 
     public bool IsCurrentClipFinished()
     {
-        print("checking");
+        //print("checking");
         return audioSource.clip != null && !audioSource.isPlaying && audioSource.time >= audioSource.clip.length;
     }
 
@@ -121,10 +121,10 @@ public class NarrationManager : MonoBehaviour
     {
         if (currentState < NarrationState.Final) 
         {
-            print("currentState 0 : "+currentState);
+            //print("currentState 0 : "+currentState);
 
             currentState++;
-            print("currentState : "+currentState);
+            //print("currentState : "+currentState);
 
             PlayNarration(currentState);
         }
