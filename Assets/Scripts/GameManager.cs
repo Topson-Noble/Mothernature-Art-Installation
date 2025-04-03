@@ -195,12 +195,13 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(6);
         AudioManager.instance.SwapTrack(futuristicClip);
-        OnLightDecay?.Invoke(10f);
+        
         OnMaterialDecay?.Invoke(5f);
         yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
         yield return new WaitForSeconds(15);
         OnMaterialDecay?.Invoke(5f);
+        OnLightDecay?.Invoke(10f);
         yield return new WaitForSeconds(10);
         OnMaterialDecay?.Invoke(5f);
         yield return new WaitForSeconds(5);
