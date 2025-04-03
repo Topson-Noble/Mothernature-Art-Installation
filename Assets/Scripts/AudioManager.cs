@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     AudioSource track01, track02;
     bool isPlayingTrack01;
     public static AudioManager instance;
+    public AudioSource treeSource;
     private void Awake()
     {
         if (instance == null)
@@ -21,6 +22,8 @@ public class AudioManager : MonoBehaviour
     {
         track01 = gameObject.AddComponent<AudioSource>();
         track02 = gameObject.AddComponent<AudioSource>();
+        track01.loop = true;
+        track02.loop = true;
         isPlayingTrack01 = true;
         track01.volume = 0.25f;
         track02.volume = 0.25f;
