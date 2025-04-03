@@ -7551,11 +7551,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatHeight: 2
   duration: 2
-  durationshake: 1.5
-  shakeDuration: 1.5
-  shakeStrength: 0.05
-  vibrato: 10
-  randomness: 90
 --- !u!114 &628743146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8230,7 +8225,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cad835ffd945a1043ada5ee44060698e, type: 2}
   gameObjectsTobeFaded:
   - objectMaterials:
-<<<<<<< HEAD
     - {fileID: 2100000, guid: cb19f02d1e2b6e143b4ce2e7923f4bb1, type: 2}
     - {fileID: 2100000, guid: dccd196b11058b4408b8e58906b480dd, type: 2}
     - {fileID: 2100000, guid: cad835ffd945a1043ada5ee44060698e, type: 2}
@@ -8240,17 +8234,6 @@ MonoBehaviour:
     - {fileID: 2100000, guid: ad2b556ef5f39df4cbaf4a43de204aa2, type: 2}
   - objectMaterials:
     - {fileID: 2100000, guid: 5081f0105cc221c499f14a15633374a2, type: 2}
-=======
-    - {fileID: 2100000, guid: 5081f0105cc221c499f14a15633374a2, type: 2}
-  - objectMaterials:
-    - {fileID: 2100000, guid: ad2b556ef5f39df4cbaf4a43de204aa2, type: 2}
-  - objectMaterials:
-    - {fileID: 2100000, guid: e1600d6a10fc1d54f8ba27e5f2e88e35, type: 2}
-  - objectMaterials:
-    - {fileID: 2100000, guid: cb19f02d1e2b6e143b4ce2e7923f4bb1, type: 2}
-    - {fileID: 2100000, guid: dccd196b11058b4408b8e58906b480dd, type: 2}
-    - {fileID: 2100000, guid: cad835ffd945a1043ada5ee44060698e, type: 2}
->>>>>>> 256f74c873e44f3e012f479a37c5d62dab00bae4
   - objectMaterials:
     - {fileID: 2100000, guid: 19edad07843cd914387a9de72835d313, type: 2}
     - {fileID: 2100000, guid: a219382922fe2c6468db74eb445dd365, type: 2}
@@ -8452,11 +8435,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatHeight: 2
   duration: 2
-  durationshake: 1.5
-  shakeDuration: 1.5
-  shakeStrength: 0.05
-  vibrato: 10
-  randomness: 90
 --- !u!114 &853512492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16647,11 +16625,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatHeight: 2
   duration: 2
-  durationshake: 6
-  shakeDuration: 6
-  shakeStrength: 0.1
-  vibrato: 30
-  randomness: 30
 --- !u!1 &2018364522 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9019202371234023755, guid: 12ca123787379c4409788163c093c5cc, type: 3}

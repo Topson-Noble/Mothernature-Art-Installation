@@ -182,47 +182,20 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(10);
 
-        for(int i = 0; i<2; i++)
+        for(int i = 0; i<scraperList.Count; i++)
         {
-            int index = i;
-            treesList[index].GetComponent<TreeAnimation>().Fall(() =>
-            {
-                scraperList[index].GetComponent<SkyScraperRise>().Appear();
-            });
+
+            treesList[i].GetComponent<TreeAnimation>().Fall();
+            scraperList[i].GetComponent<SkyScraperRise>().Appear();
         }
 
 
 
         yield return new WaitForSeconds(10);
 
-        for (int i = 2; i < 4; i++)
-        {
-            int index = i;
-            treesList[index].GetComponent<TreeAnimation>().Fall(() =>
-            {
-                scraperList[index].GetComponent<SkyScraperRise>().Appear();
-            });
-        }
-        yield return new WaitForSeconds(10);
-
-
-        for (int i = 4; i < scraperList.Count; i++)
-        {
-            int index = i;
-            treesList[index].GetComponent<TreeAnimation>().Fall(() =>
-            {
-                scraperList[index].GetComponent<SkyScraperRise>().Appear();
-            });
-        }
-
-        yield return new WaitForSeconds(16);
+        yield return new WaitForSeconds(6);
         AudioManager.instance.SwapTrack(futuristicClip);
-<<<<<<< HEAD
         
-=======
-        secondCam.GetComponent<FloatingCamera>().StopBreathingAndStartMildShake();
-        OnLightDecay?.Invoke(10f);
->>>>>>> 256f74c873e44f3e012f479a37c5d62dab00bae4
         OnMaterialDecay?.Invoke(5f);
         yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
@@ -234,7 +207,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
 
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(30);
 
         StartCoroutine("FadeIn");
 
@@ -268,7 +241,7 @@ public class GameManager : MonoBehaviour
         NarrationManager.instance.PlayNarration(NarrationManager.NarrationState.ComeBack);
         Debug.Log("waiting...");
         // While the flag is not false, keep waiting
-        while ( !fbool.isFaceDetected())
+        while (!fbool.isFaceDetected())
         {
             yield return null; // Wait for the next frame
         }
@@ -280,7 +253,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if ( fbool.isFaceDetected()&& decayNotStarted)
+        if (fbool.isFaceDetected() && decayNotStarted)
         {
             print("Check")
 ;
