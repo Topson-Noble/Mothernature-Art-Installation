@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
         secondCam.GetComponent<FloatingCamera>().StopBreathingAndStartMildShake();
         OnLightDecay?.Invoke(10f);
         OnMaterialDecay?.Invoke(5f);
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(5);
         OnMaterialDecay?.Invoke(5f);
         yield return new WaitForSeconds(15);
         OnMaterialDecay?.Invoke(5f);
