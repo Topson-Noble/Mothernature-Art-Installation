@@ -1,0 +1,12 @@
+Follow the steps below to locate the playable or executable game file:
+
+
+Navigate to the following folder path:
+
+C:\Users\***\Unity Projects\Mothernature Art Installation\Assets\Scenes
+
+Look for the file named 'MergeddScene 2' unity file
+
+Open file with Unity
+
+Enjoy!
